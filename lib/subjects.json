@@ -1,0 +1,67 @@
+{
+  "1": [
+    "Engineering Mathematics I",
+    "Programming in C",
+    "Engineering Physics / Chemistry",
+    "Engineering Graphics",
+    "English Communication",
+    "C Programming Lab",
+    "Engineering Workshop",
+    "Environmental Science"
+  ],
+  "2": [
+    "Engineering Mathematics II",
+    "Data Structures",
+    "Object-Oriented Programming (C++)",
+    "Basic Electrical & Electronics",
+    "Physics / Chemistry (remaining)",
+    "Data Structures Lab",
+    "OOP Lab"
+  ],
+  "3": [
+    "Discrete Mathematics",
+    "Digital Logic & Computer Organization",
+    "Operating Systems",
+    "Database Management Systems",
+    "Python / Java",
+    "DBMS Lab",
+    "OS Lab"
+  ],
+  "4": [
+    "Design and Analysis of Algorithms",
+    "Computer Networks",
+    "Theory of Computation",
+    "Java Programming",
+    "Aptitude & Soft Skills",
+    "Computer Networks Lab",
+    "Algorithms Lab"
+  ],
+  "5": [
+    "Software Engineering",
+    "Web Technologies",
+    "Compiler Design",
+    "Artificial Intelligence / Elective",
+    "Aptitude II",
+    "Web Technologies Lab",
+    "Mini Project"
+  ],
+  "6": [
+    "Fog Computing",
+    "Software Engineering and Project Management",
+    "Network Programming and IOT",
+    "Environment and Impact Assessment",
+    "IOT Tehcniques",
+    "Data Science"
+  ],
+  "7": [
+    "Advanced Elective (Deep Learning / Big Data etc.)",
+    "Open Elective II",
+    "Project Phase I",
+    "Seminar / Technical Writing"
+  ],
+  "8": [
+    "Major Project",
+    "Internship / Industry Project",
+    "Viva Voce"
+  ]
+}

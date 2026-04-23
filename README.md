@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+SRM Note Share is a small full‑stack note sharing platform built with Next.js (App Router), TypeScript, Tailwind CSS, Auth.js (NextAuth), and Prisma.
 
-## Getting Started
+## Tech Stack
 
-First, run the development server:
+- Next.js App Router (TypeScript)
+- Tailwind CSS (light theme, SRM accent `#0C4B9C`)
+- Auth.js (NextAuth) with Credentials Provider
+- Prisma ORM + PostgreSQL (Supabase / DATABASE_URL)
+- Local file storage under `/uploads` for PDF/PPT files
+
+## Running the app
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Copy `.env.example` to `.env` and fill in values:
+
+- `DATABASE_URL` – Supabase PostgreSQL connection string (from Supabase project → Settings → Database → Connection string)
+- `NEXTAUTH_SECRET` – long random string for Auth.js
+- `GEMINI_API_KEY` – Google Gemini API Key for AI Summarization and Chat (Get it from Google AI Studio)
+
+3. Set up your database schema (optional in dev until you connect a real DB):
+
+```bash
+npx prisma migrate dev --name init
+```
+
+4. Start the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Email + password auth (only `@srmist.edu.in` emails allowed)
+- Dashboard with note cards (title, subject, semester) and filters
+- Upload page for PDF/PPT files (stored locally, path saved in DB)
+- Simple, clean university‑style UI with a navbar + sidebar
 
-## Learn More
+## Key files
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Prisma schema: `prisma/schema.prisma`
+- Auth configuration: `lib/auth.ts` and `app/api/auth/[...nextauth]/route.ts`
+- Notes API: `app/api/notes/route.ts`
+- Upload API: `app/api/upload/route.ts`
+- Register API: `app/api/register/route.ts`
+- Pages: `app/login/page.tsx`, `app/register/page.tsx`, `app/dashboard/page.tsx`, `app/upload/page.tsx`
