@@ -1,30 +1,30 @@
 import fs from "fs/promises";
 import path from "path";
-import { extractText } from "unpdf";
+import pdfParse from "pdf-parse";
 import officeParser from "officeparser";
 
-type ExtractedPdfPayload = {
-  text?: string;
-  textItems?: string[];
-};
-
-function normalizePdfText(data: unknown): string {
-  if (typeof data === "string") {
-    return data;
+declare global {
+  interface PromiseConstructor {
+    try?<T>(
+      callback: () => T | PromiseLike<T>,
+    ): Promise<Awaited<T>>;
   }
-
-  if (typeof data === "object" && data !== null) {
-    const payload = data as ExtractedPdfPayload;
-    if (typeof payload.text === "string" && payload.text.trim()) {
-      return payload.text;
-    }
-    if (Array.isArray(payload.textItems)) {
-      return payload.textItems.join(" ");
-    }
-  }
-
-  return String(data ?? "");
 }
+
+function ensurePromiseTryPolyfill(): void {
+  if (typeof Promise.try !== "function") {
+    Promise.try = <T>(callback: () => T | PromiseLike<T>) =>
+      new Promise<Awaited<T>>((resolve, reject) => {
+        try {
+          resolve(callback() as Awaited<T>);
+        } catch (error) {
+          reject(error);
+        }
+      });
+  }
+}
+
+ensurePromiseTryPolyfill();
 
 export async function extractTextFromFile(filePath: string): Promise<string> {
   const normalizedPath = filePath.replace(/^[\\/]+/, "");
@@ -35,8 +35,8 @@ export async function extractTextFromFile(filePath: string): Promise<string> {
   if (ext === ".pdf") {
     try {
       const dataBuffer = await fs.readFile(absolutePath);
-      const data = await extractText(new Uint8Array(dataBuffer));
-      const extracted = normalizePdfText(data);
+      const parsed = await pdfParse(dataBuffer);
+      const extracted = parsed.text;
 
       if (!extracted || !extracted.trim()) {
         throw new Error("No readable text found in PDF.");
